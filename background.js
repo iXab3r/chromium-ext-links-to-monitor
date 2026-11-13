@@ -139,16 +139,23 @@ chrome.windows.onFocusChanged.addListener(async id => {
 
 // ---------- the actual work ----------
 
-chrome.tabs.onCreated.addListener(async tab => {
+// Was this tab opened by another application (rather than from inside the browser)?
+async function isExternalTab(tab) {
   const url = tab.pendingUrl || tab.url || "";
   const s = await chrome.storage.session.get(["focused", "gainedAt", "browserStartedAt"]);
+  const now = Date.now();
   log("tab created", { url, opener: tab.openerTabId, win: tab.windowId, ...s });
 
-  if (Date.now() - (s.browserStartedAt || 0) < STARTUP_GRACE_MS) return log("skip: startup grace");
-  if (tab.openerTabId !== undefined || tab.incognito) return log("skip: has opener / incognito");
-  if (!/^(https?|file):/i.test(url)) return log("skip: url");
-  const external = s.focused === false || Date.now() - (s.gainedAt || 0) < EXTERNAL_WINDOW_MS;
-  if (!external) return log("skip: opened from inside the browser");
+  if (now - (s.browserStartedAt || 0) < STARTUP_GRACE_MS) return log("skip: startup grace"), false;
+  if (tab.openerTabId !== undefined || tab.incognito) return log("skip: has opener / incognito"), false;
+  if (!/^(https?|file):/i.test(url)) return log("skip: not a web/file URL"), false;
+  if (s.focused !== false && now - (s.gainedAt || 0) >= EXTERNAL_WINDOW_MS)
+    return log("skip: opened from inside the browser"), false;
+  return true;
+}
+
+async function routeTab(tab) {
+  if (!(await isExternalTab(tab))) return;
 
   const display = await targetDisplay();
   if (!display) return log("skip: default behavior, or target monitor not connected");
@@ -163,4 +170,8 @@ chrome.tabs.onCreated.addListener(async tab => {
   await chrome.tabs.move(tab.id, { windowId: target.id, index: -1 });
   await chrome.tabs.update(tab.id, { active: true });
   await chrome.windows.update(target.id, { focused: true });
-});
+}
+
+chrome.tabs.onCreated.addListener(tab =>
+  // The tab or its window may already be gone (closed, merged), so that is not an error.
+  routeTab(tab).catch(e => log("failed to route tab:", e?.message || e)));

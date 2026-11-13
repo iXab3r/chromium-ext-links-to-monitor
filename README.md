@@ -51,3 +51,6 @@ extensions page and reproduce the problem. Every new tab logs why it was moved o
 ## Known limitation
 If you switch to the browser from another app and open a bookmark in a new tab within
 1.5 s, that tab is treated as external.
+
+## License
+[MIT](LICENSE)
