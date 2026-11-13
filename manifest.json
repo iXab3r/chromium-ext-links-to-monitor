@@ -3,11 +3,28 @@
   "name": "External Links to Monitor",
   "version": "2.0",
   "description": "Opens links coming from other apps in the browser window on the monitor you choose.",
-  "permissions": ["tabs", "system.display", "storage", "contextMenus"],
-  "background": { "service_worker": "background.js" },
+  "homepage_url": "https://github.com/iXab3r/chromium-ext-links-to-monitor",
+  "permissions": [
+    "tabs",
+    "system.display",
+    "storage",
+    "contextMenus"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_title": "External Links to Monitor (right-click to choose a monitor)",
-    "default_icon": { "16": "icons/16.png", "32": "icons/32.png", "48": "icons/48.png" }
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png"
+    }
   },
-  "icons": { "16": "icons/16.png", "32": "icons/32.png", "48": "icons/48.png", "128": "icons/128.png" }
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  }
 }

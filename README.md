@@ -56,5 +56,12 @@ extensions page and reproduce the problem. Every new tab logs why it was moved o
 If you switch to the browser from another app and open a bookmark in a new tab within
 1.5 s, that tab is treated as external.
 
+## Privacy
+No data is collected or sent anywhere; see [PRIVACY.md](PRIVACY.md).
+
+## Publishing
+Store listing texts, permission justifications and images live in [`store/`](store/LISTING.md).
+Build the upload package with `pwsh store/package.ps1`.
+
 ## License
 [MIT](LICENSE)
