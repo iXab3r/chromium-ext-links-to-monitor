@@ -8,6 +8,10 @@ This extension moves such **external** links into a browser window on the monito
 **you choose** and focuses it. Anything you open from inside the browser (links,
 bookmarks, middle-click, Ctrl+T) stays where you opened it.
 
+![Before: a link clicked in a mail app opens in the browser window on the other monitor](docs/before.svg)
+
+![After: the link opens in the browser window on the monitor you chose](docs/after.svg)
+
 Works in Microsoft Edge, Google Chrome, Brave, Vivaldi, Opera and other Chromium-based browsers.
 
 ## Install
