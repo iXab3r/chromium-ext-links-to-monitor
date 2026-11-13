@@ -1,0 +1,8 @@
+{
+  "manifest_version": 3,
+  "name": "Links to Main Monitor",
+  "version": "1.2",
+  "description": "Moves tabs opened from external apps into the Edge window on the primary monitor.",
+  "permissions": ["tabs", "system.display", "storage"],
+  "background": { "service_worker": "background.js" }
+}
